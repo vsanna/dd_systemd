@@ -1,4 +1,5 @@
 #!/bin/bash
+# chkconfig: 2345 10 90
 
 HELLO_PATH="/usr/lib/hello/mycmd.sh"
 

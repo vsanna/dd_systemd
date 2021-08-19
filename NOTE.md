@@ -14,6 +14,8 @@
 			- `$ chkconfig` で登録されているサービスのランレベル別on/offを一覧
 		- rcファイル: `/etc/rc3.d/S10network -> ../init.d/network`
 			- start|stop|restart|statusなどのoptionに応じて何をするかを記述するscriptのこと.デーモンを管理するscript
+				- chkconfigで管理するためにはファイル先頭に `# chkconfig: 2345 10 90` といったマジックコメントが必要!
+					- chkconfig runlevel / 起動時優先度 / 停止時優先度
 			- rc*.d配下にsymlinkを置くことで、どのランレベルでどのサービスを起動するかを指定
 			- (S|K)(priority(int))(scriptname)
 				- S: start, K: kill(=stop)
@@ -27,8 +29,9 @@
 			- つまり、 /etc/init.d/hoge start|stop と打っても起動時と同じことが行える
 		3. /etc/rc*.d/配下に そのinit.d配下の起動/停止scriptへのsymlinkを貼る。
 			- `update-rc.d` を使ってsymlinkはる!
-				-> 実際には `$ sudo chkconfig --level 6 network off|on`
+			- or `chkconfig -add {servicename}`
 			- 命名規則が (S|K)(priority(int))(scriptname)
+		4. `$ sudo chkconfig --level 6 network off|on` でその後は管理
 	- 余談
 		- macOSではlaunchdがinit.dに当たる
 		- 手順
@@ -63,7 +66,7 @@
 		- serviceとの違いは?
 			- service -> /etc/init.d/配下を読んでいたが、systemctlは **バイナリコマンド** を呼び出す
 	- chkconfingの代わり
-		- `$ systemctl list-unit-files` or `$ systemctl list-units --all`
+		- `$ systemctl list-unit-files --type=service`
 		- `$ systemctl enable|disable {service}`
 
 ```
