@@ -1,0 +1,23 @@
+#!/bin/bash
+
+HELLO_PATH="/usr/lib/hello/mycmd.sh"
+
+case "$1" in
+start)
+	sh HELLO_PATH
+	# do some stuff to start the process
+	;;
+stop)
+	echo "stopped!"
+	# do some stuff to stop the process
+	;;
+status)
+	echo "status:..."
+	# show some info regarding the process
+	;;
+*)
+	echo "invalid option."
+	exit 1
+	;;
+esac
+
